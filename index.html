@@ -9,10 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Karla:wght@300;400;500;700&display=swap">
   <style>
-    :root{
-      padding-top: env(safe-area-inset-top, 0px);
-      padding-bottom: env(safe-area-inset-bottom, 0px);
-    }
+    :root{ padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px) }
     html, body{ margin:0 }
     img{ max-width:100% }
     [hidden]{ display:none !important }
@@ -796,67 +793,68 @@ const PARA = "Victoria";
 const ANIO = 2026;
 
 const PUERTAS = {
-  1:  { tipo:"texto", titulo:"24 puertas, 24 días",
+  1:  { tipo:"texto", titulo:"Bienvenida",
         parrafos:[
           "Esto se abre una vez al día, de aquí al 24. Ni antes ni todo de golpe.",
           "Detrás de cada puerta hay algo: a veces un plan, a veces un regalo, a veces solo algo que quería decirte.",
           "Entra cada mañana y mira qué se encendió."
-        ] },
+        ],
+        cupon:{ que:"Un pijama frufrú", fina:"Para que lo estrenes pronto. Ya vas a ver cuándo." } },
 
-  2:  { tipo:"carta", titulo:"Antes de seguir",
-        parrafos:[
-          "Aquí va la pedida. Escríbela corta y directa — esto no necesita párrafos, necesita una pregunta.",
-          "¿Quieres ser mi novia?"
-        ] },
+  2:  { tipo:"cupon", titulo:"Una cita",
+        que:"Cena, este [día] a las [hora]",
+        fina:"No te digo dónde. Yo paso por ti." },
 
-  3:  { tipo:"cupon", titulo:"Para empezar dulce",
-        que:"Galletas de Cookie Lab",
-        fina:"Dime cuándo nos vemos y te las llevo." },
+  3:  { tipo:"texto", titulo:"El día que te conocí",
+        parrafos:["Cómo fue, contado bien.","Lo que se te quedó grabado de ese día."] },
 
   4:  { tipo:"enlace", titulo:"Esta canción me recuerda a ti",
         url:"https://open.spotify.com/",
         cta:"Escuchar",
         parrafos:["Dos líneas sobre por qué esta y no otra."] },
 
-  5:  { tipo:"cupon", titulo:"Un vale",
-        que:"Una pizza, donde tú digas",
-        fina:"Sin fecha de vencimiento." },
+  5:  { tipo:"cupon", titulo:"Hoy es sábado",
+        que:"Un día entero de películas navideñas",
+        fina:"Ponte el pijama. Yo llevo las cobijas y los snacks." },
 
   6:  { tipo:"lista", titulo:"Cinco cosas que me hacen gracia de ti",
         items:["Una.","Dos.","Tres.","Cuatro.","Cinco."] },
 
-  7:  { tipo:"cupon", titulo:"Plan de diciembre",
-        que:"Un día entero de películas navideñas",
-        fina:"Yo pongo las cobijas y los snacks." },
+  7:  { tipo:"cupon", titulo:"Algo dulce",
+        que:"Galletas de Cookie Lab",
+        fina:"Dime cuándo nos vemos y te las llevo." },
 
-  8:  { tipo:"texto", titulo:"El día que te conocí",
-        parrafos:["Cómo fue, contado bien.","Lo que se te quedó grabado."] },
+  8:  { tipo:"texto", titulo:"Lo que pensé la primera vez que te vi",
+        parrafos:["Lo que pensaste. Sin adornar."] },
 
   9:  { tipo:"cupon", titulo:"Un vale",
         que:"Un almuerzo, tú eliges el sitio",
         fina:"" },
 
-  10: { tipo:"cupon", titulo:"Flores",
+  10: { tipo:"foto", titulo:"Esta foto",
+        src:"fotos/10.jpg",
+        pie:"Aquí va el pie de foto.",
+        parrafos:["Por qué esta foto y no otra."] },
+
+  11: { tipo:"cupon", titulo:"Flores",
         que:"Un ramo que ya te está esperando",
         fina:"Dime cuándo nos vemos y te lo doy." },
 
-  11: { tipo:"texto", titulo:"Lo que pensé la primera vez que te vi",
-        parrafos:["Lo que pensaste. Sin adornar."] },
+  12: { tipo:"texto", titulo:"Algo que admiro de ti",
+        parrafos:["Algo de carácter, no de cara.","Por qué."] },
 
-  12: { tipo:"cupon", titulo:"Un vale",
+  13: { tipo:"cupon", titulo:"Un vale",
         que:"Burger Shack",
         fina:"" },
 
-  13: { tipo:"cupon", titulo:"Para ti",
-        que:"Un pijama frufrú",
-        fina:"Para los días de películas." },
-
-  14: { tipo:"texto", titulo:"Algo que admiro de ti",
-        parrafos:["Algo de carácter, no de cara.","Por qué."] },
+  14: { tipo:"foto", titulo:"Escrito a mano",
+        src:"fotos/14.jpg",
+        pie:"Perdón por la letra.",
+        parrafos:[] },
 
   15: { tipo:"cupon", titulo:"Un vale",
-        que:"Cine, la que tú quieras ver",
-        fina:"Cotufas incluidas." },
+        que:"Una pizza, donde tú digas",
+        fina:"Sin fecha de vencimiento." },
 
   16: { tipo:"galeria", titulo:"Las cosas que me recuerdan a ti",
         fotos:["fotos/16-1.jpg","fotos/16-2.jpg","fotos/16-3.jpg","fotos/16-4.jpg"],
@@ -866,10 +864,8 @@ const PUERTAS = {
         que:"Unos lentes de sol",
         fina:"" },
 
-  18: { tipo:"foto", titulo:"Escrito a mano",
-        src:"fotos/18.jpg",
-        pie:"Perdón por la letra.",
-        parrafos:[] },
+  18: { tipo:"texto", titulo:"Lo que cambió desde que te conozco",
+        parrafos:["Lo que cambió.","Sin exagerar, pero sin quedarte corto."] },
 
   19: { tipo:"cupon", titulo:"Para ti",
         que:"Ropa — vamos juntos y la escoges tú",
@@ -880,8 +876,9 @@ const PUERTAS = {
         cta:"Abrir la playlist",
         parrafos:["Están en ese orden por algo."] },
 
-  21: { tipo:"texto", titulo:"Lo que cambió desde que te conozco",
-        parrafos:["Lo que cambió.","Sin exagerar, pero sin quedarte corto."] },
+  21: { tipo:"cupon", titulo:"Un vale",
+        que:"Cine, la que tú quieras ver",
+        fina:"Cotufas incluidas." },
 
   22: { tipo:"cupon", titulo:"Un vale",
         que:"Una cena",
@@ -1094,6 +1091,14 @@ function render(d){
       break;
     default:
       h += parrafosHTML(p.parrafos);
+  }
+
+  /* cualquier puerta puede llevar un cupón al final */
+  if (p.cupon && p.tipo !== "carta"){
+    h += '<div class="cupon cupon-final"><div class="vale">Y además</div>' +
+         '<div class="que">' + p.cupon.que + "</div>" +
+         (p.cupon.fina ? '<div class="fina">' + p.cupon.fina + "</div>" : "") +
+         "</div>";
   }
 
   if (preview) h += '<div class="nota-edit">Taller — todas las ventanas abiertas. El enlace que le mandas a ella no lleva #taller.</div>';
