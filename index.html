@@ -9,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=Karla:wght@300;400;500;700&display=swap">
   <style>
-    /* base */
     :root{
       padding-top: env(safe-area-inset-top, 0px);
       padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -629,6 +628,47 @@
   .cupon .vale{ font-size:.66rem; letter-spacing:.28em; text-transform:uppercase; color: var(--luz) }
   .cupon .que{ font-family: var(--display); font-size:1.3rem; line-height:1.25; text-wrap: balance }
   .cupon .fina{ font-size:.8rem; color: var(--crema-dim) }
+  .cupon-final{ margin-top: 1.5rem }
+  
+  /* ───────────── CANDADO ───────────── */
+  #candado{
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: var(--noche);
+    display: grid;
+    place-items: center;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .cand-caja{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .9rem;
+    width: min(320px, 100%);
+    text-align: center;
+  }
+  .cand-t{
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 1.5rem;
+    font-variation-settings: 'SOFT' 40, 'WONK' 1;
+  }
+  #cand-input{
+    width: 100%;
+    background: var(--noche-2);
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    color: var(--crema);
+    font-family: var(--cuerpo);
+    font-size: 1rem;
+    padding: .8rem 1rem;
+    text-align: center;
+    letter-spacing: .08em;
+  }
+  #cand-input:focus{ outline: none; border-color: var(--luz) }
+  .cand-err{ font-size:.82rem; color: var(--brasa) }
   
   .carta p{ font-family: var(--display); font-weight:300; font-size:1.1rem; line-height:1.75 }
   .firma{ margin-top:1.4rem; font-family: var(--display); font-style:italic; color: var(--luz); font-size:1.1rem }
@@ -662,6 +702,15 @@
   </style>
 </head>
 <body>
+<div id="candado" hidden>
+  <div class="cand-caja">
+    <div class="cand-t">Taller</div>
+    <input type="password" id="cand-input" autocomplete="off" spellcheck="false" placeholder="Clave" aria-label="Clave">
+    <button class="btn" id="cand-btn">Entrar</button>
+    <div class="cand-err" id="cand-err" hidden>Esa no es.</div>
+  </div>
+</div>
+
 <canvas id="motas" aria-hidden="true"></canvas>
 <div id="grano" aria-hidden="true"></div>
 <div id="destello" aria-hidden="true"></div>
@@ -750,99 +799,103 @@ const PUERTAS = {
   1:  { tipo:"texto", titulo:"24 puertas, 24 días",
         parrafos:[
           "Esto se abre una vez al día, de aquí al 24. Ni antes ni todo de golpe.",
-          "No hay mucho más que explicar: entra cada mañana y mira qué se encendió."
+          "Detrás de cada puerta hay algo: a veces un plan, a veces un regalo, a veces solo algo que quería decirte.",
+          "Entra cada mañana y mira qué se encendió."
         ] },
 
-  2:  { tipo:"foto", titulo:"La primera que te tomé",
-        src:"fotos/02.jpg",
-        pie:"Aquí va el pie de foto.",
-        parrafos:["Un párrafo corto sobre esa foto."] },
+  2:  { tipo:"carta", titulo:"Antes de seguir",
+        parrafos:[
+          "Aquí va la pedida. Escríbela corta y directa — esto no necesita párrafos, necesita una pregunta.",
+          "¿Quieres ser mi novia?"
+        ] },
 
-  3:  { tipo:"enlace", titulo:"Esta canción me recuerda a ti",
+  3:  { tipo:"cupon", titulo:"Para empezar dulce",
+        que:"Galletas de Cookie Lab",
+        fina:"Dime cuándo nos vemos y te las llevo." },
+
+  4:  { tipo:"enlace", titulo:"Esta canción me recuerda a ti",
         url:"https://open.spotify.com/",
         cta:"Escuchar",
         parrafos:["Dos líneas sobre por qué esta y no otra."] },
 
-  4:  { tipo:"cupon", titulo:"Un vale",
-        que:"Un café donde tú elijas",
-        fina:"Sin fecha de vencimiento. Se canjea avisando." },
+  5:  { tipo:"cupon", titulo:"Un vale",
+        que:"Una pizza, donde tú digas",
+        fina:"Sin fecha de vencimiento." },
 
-  5:  { tipo:"lista", titulo:"Cinco cosas que me hacen gracia de ti",
+  6:  { tipo:"lista", titulo:"Cinco cosas que me hacen gracia de ti",
         items:["Una.","Dos.","Tres.","Cuatro.","Cinco."] },
 
-  6:  { tipo:"texto", titulo:"Una pregunta",
-        parrafos:["Aquí va la pregunta.","Te toca responder."] },
+  7:  { tipo:"cupon", titulo:"Plan de diciembre",
+        que:"Un día entero de películas navideñas",
+        fina:"Yo pongo las cobijas y los snacks." },
 
-  7:  { tipo:"texto", titulo:"El día que te conocí",
+  8:  { tipo:"texto", titulo:"El día que te conocí",
         parrafos:["Cómo fue, contado bien.","Lo que se te quedó grabado."] },
 
-  8:  { tipo:"audio", titulo:"Lo mismo, pero con mi voz",
-        src:"audio/08.m4a",
-        parrafos:["Dura poco. Ponle volumen."] },
+  9:  { tipo:"cupon", titulo:"Un vale",
+        que:"Un almuerzo, tú eliges el sitio",
+        fina:"" },
 
-  9:  { tipo:"foto", titulo:"Así te veo yo",
-        src:"fotos/09.jpg",
-        pie:"Retrato revelado por mí.",
-        parrafos:["Una línea sobre cómo salió esta foto."] },
+  10: { tipo:"cupon", titulo:"Flores",
+        que:"Un ramo que ya te está esperando",
+        fina:"Dime cuándo nos vemos y te lo doy." },
 
-  10: { tipo:"texto", titulo:"Lo que pensé la primera vez que te vi",
+  11: { tipo:"texto", titulo:"Lo que pensé la primera vez que te vi",
         parrafos:["Lo que pensaste. Sin adornar."] },
 
-  11: { tipo:"foto", titulo:"Esto es nuestro y de nadie más",
-        src:"fotos/11.jpg",
-        pie:"El chiste interno.",
-        parrafos:[] },
+  12: { tipo:"cupon", titulo:"Un vale",
+        que:"Burger Shack",
+        fina:"" },
 
-  12: { tipo:"cupon", titulo:"Otro vale",
-        que:"Una sesión de fotos tuya, donde tú quieras",
-        fina:"Tú pones el lugar y la ropa. Yo pongo lo demás." },
+  13: { tipo:"cupon", titulo:"Para ti",
+        que:"Un pijama frufrú",
+        fina:"Para los días de películas." },
 
-  13: { tipo:"texto", titulo:"Algo que admiro de ti",
+  14: { tipo:"texto", titulo:"Algo que admiro de ti",
         parrafos:["Algo de carácter, no de cara.","Por qué."] },
 
-  14: { tipo:"foto", titulo:"Escrito a mano",
-        src:"fotos/14.jpg",
+  15: { tipo:"cupon", titulo:"Un vale",
+        que:"Cine, la que tú quieras ver",
+        fina:"Cotufas incluidas." },
+
+  16: { tipo:"galeria", titulo:"Las cosas que me recuerdan a ti",
+        fotos:["fotos/16-1.jpg","fotos/16-2.jpg","fotos/16-3.jpg","fotos/16-4.jpg"],
+        parrafos:["Salí a buscarlas estas semanas. Esto fue lo que encontré."] },
+
+  17: { tipo:"cupon", titulo:"Para ti",
+        que:"Unos lentes de sol",
+        fina:"" },
+
+  18: { tipo:"foto", titulo:"Escrito a mano",
+        src:"fotos/18.jpg",
         pie:"Perdón por la letra.",
         parrafos:[] },
 
-  15: { tipo:"galeria", titulo:"Las cosas que me recuerdan a ti",
-        fotos:["fotos/15-1.jpg","fotos/15-2.jpg","fotos/15-3.jpg","fotos/15-4.jpg"],
-        parrafos:["Salí a buscarlas durante noviembre. Esto fue lo que encontré."] },
+  19: { tipo:"cupon", titulo:"Para ti",
+        que:"Ropa — vamos juntos y la escoges tú",
+        fina:"" },
 
-  16: { tipo:"lista", titulo:"Cosas que quiero hacer contigo",
-        items:["Una.","Dos.","Tres.","Cuatro."] },
-
-  17: { tipo:"texto", titulo:"Algo que nunca te he dicho",
-        parrafos:["Aquí va."] },
-
-  18: { tipo:"cupon", titulo:"El último vale",
-        que:"Un plan sorpresa, yo organizo todo",
-        fina:"Tú solo tienes que decir qué día." },
-
-  19: { tipo:"enlace", titulo:"Una playlist, para ti",
+  20: { tipo:"enlace", titulo:"Una playlist, para ti",
         url:"https://open.spotify.com/",
         cta:"Abrir la playlist",
         parrafos:["Están en ese orden por algo."] },
 
-  20: { tipo:"texto", titulo:"Lo que cambió desde que te conozco",
+  21: { tipo:"texto", titulo:"Lo que cambió desde que te conozco",
         parrafos:["Lo que cambió.","Sin exagerar, pero sin quedarte corto."] },
 
-  21: { tipo:"foto", titulo:"Nosotros",
-        src:"fotos/21.jpg",
-        pie:"Esta la quiero imprimir.",
-        parrafos:[] },
-
-  22: { tipo:"texto", titulo:"El año que viene",
-        parrafos:["Algo sobre lo que viene. Suave."] },
+  22: { tipo:"cupon", titulo:"Un vale",
+        que:"Una cena",
+        fina:"Esta la escojo yo." },
 
   23: { tipo:"susurro", titulo:"23 de diciembre",
         frase:"Mañana te digo algo." },
 
   24: { tipo:"carta", titulo:"24 de diciembre",
         parrafos:[
-          "Aquí va la carta.",
-          "Escríbela de último, cuando sepas exactamente qué quieres decir."
+          "Aquí va la carta final.",
+          "Escríbela de última, cuando sepas exactamente qué quieres decir."
         ],
+        cupon:{ que:"Un viaje a la Colonia Tovar", fina:"Tú pones la fecha." },
         firma:"— " + DE }
 };
 
@@ -861,7 +914,17 @@ const MESES = ["enero","febrero","marzo","abril","mayo","junio","julio",
                "agosto","septiembre","octubre","noviembre","diciembre"];
 const TONOS = ["t-luz","t-brasa","t-salvia","t-luz","t-hielo","t-ciruela","t-brasa"];
 
-const preview = location.hash === "#preview";
+/* Acceso al taller: valinaphoto.netlify.app/#taller + clave.
+   Aquí solo vive el hash de la clave, no la clave. Para cambiarla hay que
+   generar el SHA-256 de la nueva y pegarlo abajo. */
+const CLAVE_HASH = "f0b83acfe656d1606afeafe3b94c851f03e5cfe7aa81853a4bf635659e1e8846";
+const PIDE_CLAVE = location.hash === "#taller";
+
+let preview = false;
+if (PIDE_CLAVE){
+  try{ preview = sessionStorage.getItem("v24-taller") === "1"; }catch(e){}
+}
+
 const quieto  = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const LS = "ventanas-" + ANIO;
 
@@ -1021,13 +1084,19 @@ function render(d){
       break;
     case "carta":
       h += '<div class="carta">' + parrafosHTML(p.parrafos) + "</div>";
+      if (p.cupon){
+        h += '<div class="cupon cupon-final"><div class="vale">Y además</div>' +
+             '<div class="que">' + p.cupon.que + "</div>" +
+             (p.cupon.fina ? '<div class="fina">' + p.cupon.fina + "</div>" : "") +
+             "</div>";
+      }
       if (p.firma) h += '<div class="firma">' + p.firma + "</div>";
       break;
     default:
       h += parrafosHTML(p.parrafos);
   }
 
-  if (preview) h += '<div class="nota-edit">Modo prueba — todas las ventanas abiertas. Quita #preview del enlace antes de enviárselo.</div>';
+  if (preview) h += '<div class="nota-edit">Taller — todas las ventanas abiertas. El enlace que le mandas a ella no lleva #taller.</div>';
   return h;
 }
 
@@ -1061,6 +1130,53 @@ btnCerrar.addEventListener("click", cerrar);
 modal.addEventListener("click", e => { if (e.target === modal) cerrar(); });
 document.addEventListener("keydown", e => {
   if (e.key === "Escape" && !modal.hidden) cerrar();
+});
+
+/* ---- candado del taller ---- */
+(function(){
+  if (!PIDE_CLAVE || preview) return;
+
+  const cand = document.getElementById("candado");
+  const inp  = document.getElementById("cand-input");
+  const btn  = document.getElementById("cand-btn");
+  const err  = document.getElementById("cand-err");
+  if (!cand) return;
+
+  cand.hidden = false;
+  setTimeout(() => inp.focus(), 120);
+
+  async function sha256(txt){
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(txt));
+    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  async function probar(){
+    err.hidden = true;
+    let h = "";
+    try{
+      h = await sha256(inp.value.trim());
+    }catch(e){
+      err.textContent = "Este navegador no permite verificarla. Prueba en https.";
+      err.hidden = false;
+      return;
+    }
+    if (h === CLAVE_HASH){
+      try{ sessionStorage.setItem("v24-taller", "1"); }catch(e){}
+      location.reload();
+    } else {
+      err.hidden = false;
+      inp.value = "";
+      inp.focus();
+    }
+  }
+
+  btn.addEventListener("click", probar);
+  inp.addEventListener("keydown", e => { if (e.key === "Enter") probar(); });
+})();
+
+/* escribir #taller con la página ya abierta no recarga sola: la forzamos */
+window.addEventListener("hashchange", () => {
+  if (location.hash === "#taller" && !preview) location.reload();
 });
 
 /* ---- guirnalda ---- */
